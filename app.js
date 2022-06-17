@@ -84,8 +84,7 @@ app.get("/", (req, res) => {
                     console.error("error:" + err)
                 })
         } else {
-            let ip = "106.206.35.35" || req.headers["x-forwarded-for"] || req.socket.remoteAddress // ip address of remote client
-            console.log(req.headers["x-forwarded-for"] || req.socket.remoteAddress)
+            let ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress // ip address of remote client
             const url = "https://ip-geolocation-and-threat-detection.p.rapidapi.com/" + ip
 
             const options = {

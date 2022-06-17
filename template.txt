@@ -1,0 +1,9 @@
+if given only lat & lon, return weather data :
+
+weather_main, weather_description, base, temp, feels_like, pressure, humidity, wind.speed, wind.deg, name
+
+if given human address, return lat, lon, human_address (accurate) + weather data :
+    OR
+if given nothing, return lat, lon, human_address (not accurate) + weather data :
+
+latitude, longitude, city, pincode, region.name (state), country.name, weather_main, weather_description, base, temp, feels_like, pressure, humidity, wind.speed, wind.deg, name

@@ -75,6 +75,31 @@ char * getvalue( char * json, char * key, int occ, char * loc ) {
   return loc;
 }
 
+ST geocode(char * lat, char * lon) {
+    char * buff = (char *) malloc(1024);
+    struct string s;
+    CURL *hnd = curl_easy_init();
+    sprintf(buff, "https://google-maps-geocoding.p.rapidapi.com/geocode/json?latlng=%s%%2C%s&language=en", lat, lon);
+    curl_easy_setopt(hnd, CURLOPT_CUSTOMREQUEST, "GET");
+    curl_easy_setopt(hnd, CURLOPT_URL, buff);
+
+    struct curl_slist *headers = NULL;
+    headers = curl_slist_append(headers, "X-RapidAPI-Key: 15be109401msh039dc334993a18cp1b9113jsn7f88dd5900bf");
+    headers = curl_slist_append(headers, "X-RapidAPI-Host: google-maps-geocoding.p.rapidapi.com");
+    curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, headers);
+
+    CURLcode response = curl_easy_perform(hnd);
+    init_string(&s);
+    if(response != CURLE_OK) {
+        fprintf(stderr, "Request failed: %s\n", curl_easy_strerror(response));
+        strcpy(s.ptr, curl_easy_strerror(response));
+        return s;
+    } /*else {
+        printf("Data : \n%s", s.ptr);
+    }*/
+    curl_easy_cleanup(hnd);
+    return s;
+}
 ST getreq(char * ur) {
     CURL *curl;
     CURLcode response;
@@ -115,10 +140,14 @@ int main () {
   char * desc = (char *) malloc(15);
   char * temp = (char *) malloc(15);
   char * pressure = (char *) malloc(15);
+  char * addr = (char *) malloc(100);
   desc = getvalue(weatheratip.ptr, "\"description\"", 1, desc);
   temp = getvalue(weatheratip.ptr, "\"temp\"", 1, temp);
   pressure = getvalue(weatheratip.ptr, "\"pressure\"", 1, pressure);
-  printf("\nWeather : %s\nTemperature: %s\nPressure : %s\n\n", desc, temp, pressure);
+  ST address = geocode(lat, lon);
+  addr = getvalue(address.ptr, "\"formatted_address\"", 1, addr);
+
+  printf("\nWeather : %s\nTemperature: %s\nPressure : %s\nAddress : %s\n\n", desc, temp, pressure, addr);
 
   free(ip.ptr);
   free(weatheratip.ptr);

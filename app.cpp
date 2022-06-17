@@ -19,6 +19,29 @@ string http(string url) {
   return res;
 }
 
+void showWeather(string w) {
+  std::vector<std::string>   a;
+
+  std::stringstream  dataa(w);
+
+  std::string line;
+  while(std::getline(dataa,line,',')) {
+    a.push_back(line); // Note: You may get a couple of blank lines
+  }
+
+  cout << "Weather : " << a[0] << endl;
+  cout << "Description : " << a[1] << endl;
+  cout << "  " << a[2] << endl;
+  cout << "Temperature : " << a[3] << endl;
+  cout << "Feels Like : " << a[4] << endl;
+  cout << "Pressure : " << a[5] << " Bar" << endl;
+  cout << "Humidity : " << a[6] << endl;
+  cout << "Wind Speed : " << a[7] << " Kmph" << endl;
+  cout << "Wind Direction : " << a[8] << endl;
+  cout << "At : " << a[9] << endl;
+  
+}
+
 string url_encode(const string &value) {
     ostringstream escaped;
     escaped.fill('0');
@@ -54,23 +77,14 @@ int main() {
     getline(data, addr);
     url += "?lat=" + lat + "&lon=" + lon;
   }
+  data.close();
   string res = http(url);
-  std::vector<std::string>   arst;
-
-  std::stringstream  dataa(res);
-
-  std::string line;
-  while(std::getline(dataa,line,',')) {
-    arst.push_back(line); // Note: You may get a couple of blank lines
-                            // When multiple underscores are beside each other.
-    cout << line << endl;
-  }
-  cout << res << "\nDone\n";//Voila
+  showWeather(res);
   string userinp;
   cout << "Enter your location : ";
   getline(cin, userinp);
   userinp = "curl -o data.txt http://krokxweather.herokuapp.com/?address=" + url_encode(userinp);
   res = http(userinp);
-  cout << res << endl;
+  showWeather(res);
   return 0;
 }

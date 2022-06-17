@@ -1,1 +1,1 @@
-Mist,mist,stations,297.14,298.05,1008,94,2.57,230,Ranchi23.3440997,85.309562,Ranchi, Jharkhand, India
+Clouds,broken clouds,stations,305.32,309.15,1001,55,1.11,117,Samāstipur25.8501436,85.77691639999999,Bihar 848101, India

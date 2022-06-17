@@ -75,7 +75,7 @@ app.get("/", (req, res) => {
                         let ta = [json.results[0].geometry.location.lat, json.results[0].geometry.location.lng, json.results[0].formatted_address]
                         let tstr = ta.join(",")
                         getWeather(ta[0], ta[1])
-                            .then(data => res.send(data + tstr))
+                            .then(data => res.send(data + "," + tstr))
                             .catch(err => res.status(400).send(err))
                     }
                 })
@@ -102,7 +102,7 @@ app.get("/", (req, res) => {
                     let ta = [json.location.latitude, json.location.longitude, json.location.city, json.location.postal, json.location.region.name, json.location.country.name]
                     let tstr = ta.join(",")
                     getWeather(ta[0], ta[1])
-                        .then(data => res.send(data + tstr))
+                        .then(data => res.send(data + "," + tstr))
                         .catch(err => res.status(400).send(err))
                     // res.json(json)
                 })

@@ -15,6 +15,8 @@ string http(string url) {
   string res;
   ifstream file("data.txt");//Retrieving response from data.txt
   getline(file, res);
+  file.close();
+  return res;
 }
 
 string url_encode(const string &value) {
@@ -52,11 +54,7 @@ int main() {
     getline(data, addr);
     url += "?lat=" + lat + "&lon=" + lon;
   }
-  system(url.c_str());//Executing script
-  system("clear");//Clearing previous logs so that the result can be seen neatly
-  string res;
-  ifstream file("data.txt");//Retrieving response from data.txt
-  getline(file, res);
+  string res = http(url);
   std::vector<std::string>   arst;
 
   std::stringstream  dataa(res);
@@ -67,10 +65,12 @@ int main() {
                             // When multiple underscores are beside each other.
     cout << line << endl;
   }
-  file.close(); 
   cout << res << "\nDone\n";//Voila
   string userinp;
   cout << "Enter your location : ";
-  cin >> userinp;
-
+  getline(cin, userinp);
+  userinp = "curl -o data.txt http://krokxweather.herokuapp.com/?address=" + url_encode(userinp);
+  res = http(userinp);
+  cout << res << endl;
+  return 0;
 }

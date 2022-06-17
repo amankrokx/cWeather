@@ -1,1 +1,1 @@
-Clouds,scattered clouds,stations,298.95,299.62,1011,78,2.06,210,Bengaluru12.9762,77.6033,Bengaluru,560001,Karnātaka,India
+Mist,mist,stations,297.14,298.05,1008,94,2.57,230,Ranchi23.3440997,85.309562,Ranchi, Jharkhand, India

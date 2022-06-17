@@ -31,7 +31,7 @@ void showWeather(string w) {
 
   cout << "Weather : " << a[0] << endl;
   cout << "Description : " << a[1] << endl;
-  cout << "  " << a[2] << endl;
+  // cout << "  " << a[2] << endl;
   cout << "Temperature : " << a[3] << endl;
   cout << "Feels Like : " << a[4] << endl;
   cout << "Pressure : " << a[5] << " Bar" << endl;

@@ -2,12 +2,15 @@
 #include <cctype>
 #include <vector>
 #include <iomanip>
+#include <sstream>
 #include <fstream>
 #include <string>
 #include <algorithm>
 #include <stdio.h>
 
 using namespace std;
+
+string lat, lon, addr;
 
 string http(string url) {
   system(url.c_str());//Executing script
@@ -19,7 +22,13 @@ string http(string url) {
   return res;
 }
 
-void showWeather(string w) {
+void writeCoord(string a, string b, string c) {
+  ofstream mf("coord.txt");
+  mf << a << '\n' << b << '\n' << c;
+  mf.close();
+}
+
+void showWeather(string w, bool t = false) {
   std::vector<std::string>   a;
 
   std::stringstream  dataa(w);
@@ -39,7 +48,19 @@ void showWeather(string w) {
   cout << "Wind Speed : " << a[7] << " Kmph" << endl;
   cout << "Wind Direction : " << a[8] << endl;
   cout << "At : " << a[9] << endl;
-  
+
+  if (a.size() > 10) {
+    if (lat != a[10]) {
+      lat = a[10];
+      lon = a[11];
+      addr = "";
+      for (auto i = 12; i < a.size(); i++) {
+        addr += a[i] + ", ";
+      }
+      if (!t) writeCoord(lat, lon, addr);
+    }
+  }
+  cout << endl << addr << endl;
 }
 
 string url_encode(const string &value) {
@@ -67,10 +88,7 @@ string url_encode(const string &value) {
 
 int main() {
   ifstream data("coord.txt");//Retrieving response from data.txt
-  string lat;
-  string lon;
-  string addr;
-  string url = "curl -o data.txt http://krokxweather.herokuapp.com/";
+  string url = "curl -s -o data.txt http://krokxweather.herokuapp.com/";
   getline(data, lat);
   if (lat.length() > 0) {
     getline(data, lon);
@@ -80,11 +98,31 @@ int main() {
   data.close();
   string res = http(url);
   showWeather(res);
+  int ch = 0;
   string userinp;
-  cout << "Enter your location : ";
-  getline(cin, userinp);
-  userinp = "curl -o data.txt http://krokxweather.herokuapp.com/?address=" + url_encode(userinp);
-  res = http(userinp);
-  showWeather(res);
+  while (true) {
+    cout << "1. Enter Address.\n2. Exit\n";
+    cin >> ch;
+    if (ch == 1) {
+      system("clear");
+      cout << "Enter location : ";
+      getline(cin, userinp);
+      getline(cin, userinp);
+      userinp = "curl -s -o data.txt http://krokxweather.herokuapp.com/?address=" + url_encode(userinp);
+      // system("clear");
+      showWeather(http(userinp), false);
+      cout << "\n Do you want to save this location ? (Y/n): ";
+      string t;
+      cin >> t;
+      if (t == "y" || t == "Y") writeCoord(lat, lon, addr);
+    }
+    else return 0;
+  }
+  // string userinp;
+  // cout << "Enter your location : ";
+  // getline(cin, userinp);
+  // userinp = "curl -s -o data.txt http://krokxweather.herokuapp.com/?address=" + url_encode(userinp);
+  // res = http(userinp);
+  // showWeather(res);
   return 0;
 }

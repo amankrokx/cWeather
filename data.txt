@@ -1,1 +1,1 @@
-Clouds,broken clouds,stations,305.32,309.15,1001,55,1.11,117,Samāstipur,25.8501436,85.77691639999999,Bihar 848101, India
+Clouds,broken clouds,stations,296.95,297.55,1012,83,5.14,240,Bengaluru,12.9762,77.6033,Bengaluru,560001,Karnātaka,India

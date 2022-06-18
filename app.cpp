@@ -38,16 +38,16 @@ void showWeather(string w, bool t = false) {
     a.push_back(line); // Note: You may get a couple of blank lines
   }
 
-  cout << "Weather : " << a[0] << endl;
-  cout << "Description : " << a[1] << endl;
+  cout << "Weather        : " << a[0] << endl;
+  cout << "Description    : " << a[1] << endl;
   // cout << "  " << a[2] << endl;
-  cout << "Temperature : " << a[3] << endl;
-  cout << "Feels Like : " << a[4] << endl;
-  cout << "Pressure : " << a[5] << " Bar" << endl;
-  cout << "Humidity : " << a[6] << endl;
-  cout << "Wind Speed : " << a[7] << " Kmph" << endl;
-  cout << "Wind Direction : " << a[8] << endl;
-  cout << "At : " << a[9] << endl;
+  cout << "Temperature    : " << stoi(a[3]) - 273 << "° C" << endl;
+  cout << "Feels Like     : " << stoi(a[4]) - 273 << "° C" << endl;
+  cout << "Pressure       : " << a[5] << " Bar" << endl;
+  cout << "Humidity       : " << a[6] << " %" << endl;
+  cout << "Wind Speed     : " << a[7] << " Kmph" << "🌬️" <<endl;
+  cout << "Wind Direction : " << a[8] << " deg" << endl;
+  cout << "At             : " << a[9] << endl;
 
   if (a.size() > 10) {
     if (lat != a[10]) {
@@ -60,7 +60,7 @@ void showWeather(string w, bool t = false) {
       if (!t) writeCoord(lat, lon, addr);
     }
   }
-  cout << endl << addr << endl;
+  cout << endl << addr << endl << endl;
 }
 
 string url_encode(const string &value) {

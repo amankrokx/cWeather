@@ -1,1 +1,1 @@
-Clouds,broken clouds,stations,296.95,297.55,1012,83,5.14,240,Bengaluru,12.9762,77.6033,Bengaluru,560001,Karnātaka,India
+Clouds,broken clouds,stations,297.15,297.54,959,74,2.57,260,Bengaluru,12.9762,77.6033,Bengaluru,560001,Karnātaka,India

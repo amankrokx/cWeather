@@ -38,16 +38,27 @@ void showWeather(string w, bool t = false) {
     a.push_back(line); // Note: You may get a couple of blank lines
   }
 
-  cout << "Weather        : " << a[0] << endl;
-  cout << "Description    : " << a[1] << endl;
+  // cout << "Weather : " << a[0] << endl;
+  // cout << "Description : " << a[1] << endl;
+  // // cout << "  " << a[2] << endl;
+  // cout << "Temperature : " << a[3] << endl;
+  // cout << "Feels Like : " << a[4] << endl;
+  // cout << "Pressure : " << a[5] << " Bar" << endl;
+  // cout << "Humidity : " << a[6] << endl;
+  // cout << "Wind Speed : " << a[7] << " Kmph" << endl;
+  // cout << "Wind Direction : " << a[8] << endl;
+  // cout << "At : " << a[9] << endl;
+  cout << "\n\n\t\t---------------- YOU ARE THE SUNSHINE -------------------" << endl ;
+  cout << "\tWeather at     : " << a[12] <<endl;
+  cout << "\n\tWeather        : " << a[0] << endl;
+  cout << "\tDescription    : " << a[1] << endl;
   // cout << "  " << a[2] << endl;
-  cout << "Temperature    : " << stoi(a[3]) - 273 << "° C" << endl;
-  cout << "Feels Like     : " << stoi(a[4]) - 273 << "° C" << endl;
-  cout << "Pressure       : " << a[5] << " Bar" << endl;
-  cout << "Humidity       : " << a[6] << " %" << endl;
-  cout << "Wind Speed     : " << a[7] << " Kmph" << "🌬️" <<endl;
-  cout << "Wind Direction : " << a[8] << " deg" << endl;
-  cout << "At             : " << a[9] << endl;
+  cout << "\tTemperature    : " << stoi(a[3]) - 273 << " ° C" << endl;
+  cout << "\tFeels Like     : " << stoi(a[4]) - 273 << " ° C" << endl;
+  cout << "\tPressure       : " << a[5] << " Bar" << endl;
+  cout << "\tHumidity       : " << a[6] << endl;
+  cout << "\tWind Speed     : " << a[7] << " Kmph" << endl;
+  cout << "\tWind Direction : " << a[8] << " degree" << endl << endl;
 
   if (a.size() > 10) {
     if (lat != a[10]) {
@@ -60,7 +71,8 @@ void showWeather(string w, bool t = false) {
       if (!t) writeCoord(lat, lon, addr);
     }
   }
-  cout << endl << addr << endl << endl;
+  cout << "\tAt :" << addr << endl;
+  cout << "\n\t\t---------------- HAVE A GOOD DAY AMIGO -------------------" << endl << endl ;
 }
 
 string url_encode(const string &value) {
@@ -88,16 +100,20 @@ string url_encode(const string &value) {
 
 int main() {
   ifstream data("coord.txt");//Retrieving response from data.txt
-  string url = "curl -s -o data.txt http://krokxweather.herokuapp.com/";
+  string url = "curl -s -H 'Pragma: no-cache' -o data.txt http://krokxweather.herokuapp.com/";
   getline(data, lat);
   if (lat.length() > 0) {
     getline(data, lon);
     getline(data, addr);
     url += "?lat=" + lat + "&lon=" + lon;
+    string res = http(url);
+    showWeather(res, true);
+  }
+  else {
+    string res = http(url);
+    showWeather(res, false);
   }
   data.close();
-  string res = http(url);
-  showWeather(res);
   int ch = 0;
   string userinp;
   while (true) {
@@ -108,7 +124,7 @@ int main() {
       cout << "Enter location : ";
       getline(cin, userinp);
       getline(cin, userinp);
-      userinp = "curl -s -o data.txt http://krokxweather.herokuapp.com/?address=" + url_encode(userinp);
+      userinp = "curl -s -H 'Pragma: no-cache' -o data.txt http://krokxweather.herokuapp.com/?address=" + url_encode(userinp);
       // system("clear");
       showWeather(http(userinp), false);
       cout << "\n Do you want to save this location ? (Y/n): ";
@@ -116,7 +132,9 @@ int main() {
       cin >> t;
       if (t == "y" || t == "Y") writeCoord(lat, lon, addr);
     }
-    else return 0;
+    else {
+      return 0;
+    }
   }
   // string userinp;
   // cout << "Enter your location : ";

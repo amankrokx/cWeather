@@ -1,1 +1,1 @@
-Clouds,broken clouds,stations,297.15,297.54,959,74,2.57,260,Bengaluru,12.9762,77.6033,Bengaluru,560001,Karnātaka,India
+Clear,clear sky,stations,308.89,313.2,1002,44,4.06,262,Samāstipur,25.8501436,85.77691639999999,Bihar 848101, India
